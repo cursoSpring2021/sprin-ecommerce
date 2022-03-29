@@ -54,6 +54,7 @@ public class HomeController {
 
 	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
 		DetalleOrden detalleOrden = new DetalleOrden();
+
 		Producto producto = new Producto();
 		double sumaTotal = 0;
 		Optional<Producto> optionalProducto = productoService.get(id);
@@ -65,9 +66,13 @@ public class HomeController {
 		detalleOrden.setNombre(producto.getNombre());
 		detalleOrden.setTotal(producto.getPrecio() * cantidad);
 		detalleOrden.setProducto(producto);
+		// Validar que el producto no se añada mas 2 veces
+		Integer idProducto = producto.getId();
+		boolean ingresado = detalles.stream().anyMatch(p -> p.getProducto().getId() == idProducto);
 
-		detalles.add(detalleOrden);
-
+		if (!ingresado) {
+			detalles.add(detalleOrden);
+		}
 		sumaTotal = detalles.stream().mapToDouble(dt -> dt.getTotal()).sum();
 		orden.setTotal(sumaTotal);
 		model.addAttribute("cart", detalles);
@@ -96,6 +101,16 @@ public class HomeController {
 		model.addAttribute("orden", orden);
 
 		return "usuario/carrito";
+	}
+	
+	@GetMapping("/getCart")
+	public String getCart(Model model) {
+		model.addAttribute("cart", detalles);
+		model.addAttribute("orden", orden);
+		
+		
+		
+		return "/usuario/carrito";
 	}
 
 }
