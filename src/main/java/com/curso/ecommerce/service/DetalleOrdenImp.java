@@ -14,7 +14,7 @@ public class DetalleOrdenImp implements IDetalleOrdenService {
 	@Override
 	public DetalleOrden save(DetalleOrden detalleOrden) {
 		
-		return detalleOrdenRepository.save(detalleOrden);
+		return detalleOrdenRepository.save(detalleOrden); 
 	}
 
 }
