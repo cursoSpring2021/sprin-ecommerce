@@ -53,6 +53,9 @@ public class HomeController {
 		
 
 		model.addAttribute("productos", productoService.findAll());
+		//session
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
+		
 		return "usuario/home";
 	}
 
@@ -121,9 +124,12 @@ public class HomeController {
 	}
 
 	@GetMapping("/getCart")
-	public String getCart(Model model) {
+	public String getCart(Model model, HttpSession session) {
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
+		
+		//sesion
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		return "/usuario/carrito";
 	}
 
@@ -144,10 +150,12 @@ public class HomeController {
 		Date fechaCrecion = new Date();
 		orden.setFechaCreacion(fechaCrecion);
 		orden.setNumero(ordenService.generarNumeroOrden());
+		
 		// usuario
 		Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 		orden.setUsuario(usuario);
 		ordenService.save(orden);
+		
 		// Guardar detalles
 		for (DetalleOrden dt : detalles) {
 			dt.setOrden(orden);
