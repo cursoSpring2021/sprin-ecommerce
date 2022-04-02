@@ -1,13 +1,14 @@
 package com.curso.ecommerce.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name= "ordenes")
@@ -21,8 +22,8 @@ public class Orden {
 	private double total;
 	@ManyToOne
 	private Usuario usuario;
-	@OneToOne(mappedBy = "orden")
-	private DetalleOrden detalleOrden;
+	@OneToMany(mappedBy = "orden")
+	private List<DetalleOrden> detalleOrden;
 
 	public Orden() {
 		super();
@@ -88,11 +89,13 @@ public class Orden {
 	}
 
 	
-	public DetalleOrden getDetalleOrden() {
+	
+
+	public List<DetalleOrden> getDetalleOrden() {
 		return detalleOrden;
 	}
 
-	public void setDetalleOrden(DetalleOrden detalleOrden) {
+	public void setDetalleOrden(List<DetalleOrden> detalleOrden) {
 		this.detalleOrden = detalleOrden;
 	}
 

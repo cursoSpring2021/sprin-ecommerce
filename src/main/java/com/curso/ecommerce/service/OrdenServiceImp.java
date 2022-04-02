@@ -1,13 +1,13 @@
 package com.curso.ecommerce.service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.curso.ecommerce.model.Orden;
+import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.repository.IOrdenRepository;
 
 @Service
@@ -54,5 +54,15 @@ public class OrdenServiceImp implements IOrdenService {
 		}
 		return numeroConcatenado;
 	}
+
+	@Override
+	public List<Orden> findByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return ordenRepository.findByUsuario(usuario); 
+	}
+
+	
+
+	
 
 }
